@@ -15,9 +15,10 @@ local nombreDeObjetivo
 local comprobarX = {0}
 local comprobarY = {0}
 local comprobarZ = {0}
-local mob1 = "Esqueleto"
+local mob1 = "Esqueleto" --here you set more variables for more mob objetives, you will need to add the respect condition more below
 local mob2 = "Zombi"
 local mob3 = "Creeper"
+local range = 18 --this is the range of the turret
 
 local function pullFiltered(...)
   local args = table.pack(...)
@@ -83,13 +84,14 @@ end
 
 ----PROGRAMA----
 for i=1, math.huge do
-  objetivos = entdetec.scanEntities(18)
+  objetivos = entdetec.scanEntities(range)
   if objetivos == boolean then 
   objetivos = {1}
   end
   for k,v in pairs(objetivos) do
     nombreDeObjetivo = v.name
-    if nombreDeObjetivo == mob1 or nombreDeObjetivo == mob2 or nombreDeObjetivo == mob3 then
+    if nombreDeObjetivo == mob1 or nombreDeObjetivo == mob2 or nombreDeObjetivo == mob3 then --here you will add the conditions to 
+			--make the turret attack more mobs, there are 3 examples
 	  x = v.x
 	  y = v.y+1
 	  z = v.z
@@ -130,7 +132,8 @@ for i=1, math.huge do
         sleep(0.5)
 	  end
 	  
-	elseif nombreDeObjetivo ~= mob1 or nombreDeObjetivo ~= mob2 or nombreDeObjetivo ~= mob3 then
+	elseif nombreDeObjetivo ~= mob1 or nombreDeObjetivo ~= mob2 or nombreDeObjetivo ~= mob3 then --and here you put the same 
+			                        -- conditions like above but with "~=" instead of "=="
       turret.setArmed(false)
 	  turret.powerOff()
 	end
