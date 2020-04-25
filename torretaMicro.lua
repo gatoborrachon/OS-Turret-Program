@@ -15,10 +15,10 @@ local nombreDeObjetivo
 local comprobarX = {0}
 local comprobarY = {0}
 local comprobarZ = {0}
-local mob1 = "Esqueleto"
+local mob1 = "Esqueleto" --here you set more variables for more mob objetives, you will need to add the respect condition more below
 local mob2 = "Zombi"
 local mob3 = "Creeper"
-local range = 18
+local range = 18 --this is the range of the turret
 
 local function pullFiltered(...)
   local args = table.pack(...)
@@ -90,51 +90,53 @@ for i=1, math.huge do
   else
   for k,v in pairs(objetivos) do
     nombreDeObjetivo = v.name
-    if nombreDeObjetivo == mob1 or nombreDeObjetivo == mob2 or nombreDeObjetivo == mob3 then
+    if nombreDeObjetivo == mob1 or nombreDeObjetivo == mob2 or nombreDeObjetivo == mob3 then --here you will add the conditions to 
+			                                                --make the turret attack more mobs, there are 3 examples
 	  x = v.x
 	  y = v.y+1
 	  z = v.z
 	  
 	  tanXZ = x/z
-      tanY = y/(math.sqrt((x*x)+(z*z)))
+          tanY = y/(math.sqrt((x*x)+(z*z)))
 	  anguloHorizontal = math.deg(math.atan(tanXZ))
 	  anguloVertical = math.deg(math.atan(tanY))
 	
 	  if x >= 0 and z >= 0 then --90-180
 	    anguloHorizontal = -anguloHorizontal+180
-      elseif x < 0 and z > 0 then --180-270
+          elseif x < 0 and z > 0 then --180-270
 	    anguloHorizontal = -anguloHorizontal+180
-      elseif x > 0 and z < 0 then --0-90
+          elseif x > 0 and z < 0 then --0-90
 	    anguloHorizontal = -anguloHorizontal
-      elseif x < 0 and z < 0 then --270-360
+          elseif x < 0 and z < 0 then --270-360
 	    anguloHorizontal = -anguloHorizontal+360
-      end
+          end
 
 	  if anguloVertical >= 45 then
 	    anguloVertical = 44
 	  elseif anguloVertical <= -45 then
-       anguloVertical = -44
+            anguloVertical = -44
 	  end
 	  
-      if x ~= comprobarX[1] or y ~= comprobarY[1] or z ~= comprobarZ[1] then	   
+          if x ~= comprobarX[1] or y ~= comprobarY[1] or z ~= comprobarZ[1] then	   
 	    table.insert(comprobarX, 1, x)
 	    table.insert(comprobarY, 1, y)
 	    table.insert(comprobarZ, 1, z)
 
-        turret.powerOn()
-        turret.setArmed(true)
+            turret.powerOn()
+            turret.setArmed(true)
 	    turret.moveTo(anguloHorizontal,anguloVertical)
-        while turret.isOnTarget() == false do
-          sleep(0.1)
-        end
+            while turret.isOnTarget() == false do
+              sleep(0.1)
+            end
 	    turret.fire()
-        sleep(0.5)
+            sleep(0.5)
 	  end
 	  
-	elseif nombreDeObjetivo ~= mob1 or nombreDeObjetivo ~= mob2 or nombreDeObjetivo ~= mob3 then
-      turret.setArmed(false)
+	elseif nombreDeObjetivo ~= mob1 or nombreDeObjetivo ~= mob2 or nombreDeObjetivo ~= mob3 then --and here you put the same 
+			                                                      -- conditions like above but with "~=" instead of "=="
+        turret.setArmed(false)
 	  turret.powerOff()
 	end
-  end
+    end
   end
 end
