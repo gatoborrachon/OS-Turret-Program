@@ -131,11 +131,6 @@ for i=1, math.huge do
 	    turret.fire()
             sleep(0.5)
 	  end
-	  
-	elseif nombreDeObjetivo ~= mob1 or nombreDeObjetivo ~= mob2 or nombreDeObjetivo ~= mob3 then --and here you put the same 
-			                                                      -- conditions like above but with "~=" instead of "=="
-        turret.setArmed(false)
-	  turret.powerOff()
 	end
     end
   end
